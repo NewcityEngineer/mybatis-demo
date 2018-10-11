@@ -2,6 +2,7 @@ package com.newcitysoft.test;
 
 import com.newcitysoft.study.mybatis.Blog;
 import com.newcitysoft.study.mybatis.BlogMapper;
+import com.newcitysoft.study.mybatis.BlogQueryVO;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -11,6 +12,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -46,7 +48,7 @@ public class BlogMapperTest {
     public void testSelect() {
         try {
             BlogMapper mapper = sqlSession.getMapper(BlogMapper.class);
-            Blog blog = mapper.selectBlog(1);
+            Blog blog = mapper.selectBlog(4);
             System.out.println(blog);
         } finally {
             sqlSession.close();
@@ -94,6 +96,22 @@ public class BlogMapperTest {
             mapper.deleteById(2);
 
             sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test
+    public void testFindBlogList() {
+        try {
+            BlogMapper mapper = sqlSession.getMapper(BlogMapper.class);
+
+            BlogQueryVO vo = new BlogQueryVO();
+
+            vo.setIds(Arrays.asList(1,4,5));
+
+            List<Blog> blogList = mapper.findBlogList(vo);
+            System.out.println(blogList);
         } finally {
             sqlSession.close();
         }

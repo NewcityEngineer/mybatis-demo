@@ -10,7 +10,15 @@
         content
     </sql>
 
-    <select id="selectBlog" resultType="com.newcitysoft.study.mybatis.Blog">
+    <resultMap id="blogResult" type="com.newcitysoft.study.mybatis.Blog">
+        <collection property="posts" column="id" ofType="Post" select="selectPostsForBlog"/>
+    </resultMap>
+
+    <select id="selectPostsForBlog" resultType="com.newcitysoft.study.mybatis.Post">
+        SELECT * FROM post WHERE blog_id = #{id}
+    </select>
+
+    <select id="selectBlog" resultMap="blogResult">
       select
         <include refid="fields" />
       from
@@ -46,4 +54,20 @@
     <delete id="deleteById" parameterType="java.lang.Integer">
         delete from blog where id=#{id}
     </delete>
+
+    <sql id="query_blog_sql">
+        <if test="title!=null and title != ''">
+            and title=#{title}
+        </if>
+    </sql>
+
+    <select id="findBlogList" parameterType="com.newcitysoft.study.mybatis.BlogQueryVO" resultType="Blog">
+        select * from blog
+        <where>
+            <include refid="query_blog_sql"></include>
+            <foreach collection="ids" item="id" open="AND (" close=")" separator="or">
+                id=#{id}
+            </foreach>
+        </where>
+    </select>
 </mapper>

@@ -20,4 +20,6 @@ public interface BlogMapper {
     void update(Blog blog);
 
     void deleteById(Integer id);
+
+    List<Blog> findBlogList(BlogQueryVO vo);
 }

@@ -1,17 +1,14 @@
 package com.newcitysoft.study.mybatis;
 
-import java.util.List;
-
 /**
  * @author lixin.tian@renren-inc.com
- * @date 2018/9/18 14:22
+ * @date 2018/9/29 17:40
  */
-public class Blog {
+public class Post {
     private int id;
+    private int blogId;
     private String title;
     private String content;
-
-    private List<Post> posts;
 
     public int getId() {
         return id;
@@ -19,6 +16,14 @@ public class Blog {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getBlogId() {
+        return blogId;
+    }
+
+    public void setBlogId(int blogId) {
+        this.blogId = blogId;
     }
 
     public String getTitle() {
@@ -37,21 +42,13 @@ public class Blog {
         this.content = content;
     }
 
-    public List<Post> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
-    }
-
     @Override
     public String toString() {
-        return "Blog{" +
+        return "Post{" +
                 "id=" + id +
+                ", blogId=" + blogId +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", posts=" + posts +
                 '}';
     }
 }
